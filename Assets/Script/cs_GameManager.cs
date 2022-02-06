@@ -14,17 +14,28 @@ public class cs_GameManager : MonoBehaviour
         Instance = this;
     }
 
+    
 
-    public int GameState(int State)
+
+    public void GameState(int GameState)
     {
-        int GameState = 0;
+        
         //BeforeStart 0;
         //StartGame 1;
         //GameOver 2;
+        if (GameState == 1)
+        {
+            Debug.Log("game state: GameStart");
+            Player.SendMessage("StartGame");
+        }
+        else if (GameState == 2)
+        {
+            Debug.Log("game state: GameOver");
+            Player.SendMessage("GameOver");
+        }
 
-        GameState = State;
         Debug.Log("game state:" + GameState);
-        return GameState;
+        
     }
 
 

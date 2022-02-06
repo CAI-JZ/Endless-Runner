@@ -25,6 +25,12 @@ public class cs_Character : MonoBehaviour
         
     }
 
+    public void GameOver()
+    {
+        speed = 0;
+        controller.Die();
+        Debug.Log("GameOver");
+    }
 
     // Start is called before the first frame update
     void Start()

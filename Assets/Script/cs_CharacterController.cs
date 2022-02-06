@@ -44,6 +44,12 @@ public class cs_CharacterController : MonoBehaviour
         m_Anim.CrossFade("RollFWD_HG01_Anim", 0.1f);
     }
 
+    public void Die()
+    {
+        m_Anim.SetBool("IsDie", true);
+    }
+
+
 
     void PhysicsCheck()
     {
