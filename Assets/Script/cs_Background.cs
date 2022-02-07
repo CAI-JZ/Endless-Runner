@@ -4,11 +4,18 @@ using UnityEngine;
 
 public class cs_Background : MonoBehaviour
 {
+
+    public GameObject Obstruck1;
+    public GameObject Obstruck2;
+
+
     private void OnTriggerEnter2D(Collider2D collision)
-    { 
-        if (collision.GetComponent<Collider2D>().tag == "Player")
+    {
+        if (collision.tag == "Player")
         {
             GetComponent<Transform>().position += new Vector3(0, 36, 0);
+            Obstruck1.SendMessage("RandomObstruct");
+            Obstruck2.SendMessage("RandomObstruct");
         }
     }
 
