@@ -11,7 +11,7 @@ public class cs_CharacterController2D : MonoBehaviour
 
     public void StartGame()
     {
-        speed = 30;
+        speed = 40;
 
     }
 
