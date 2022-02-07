@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class cs_GroungMove : MonoBehaviour
 {
+    public GameObject Obstruct1;
+    public GameObject Obstruct2;
 
     public Transform CurrentTrans;
     private Vector3 NewPos;
@@ -23,11 +25,13 @@ public class cs_GroungMove : MonoBehaviour
         if (other.tag == "Player")
         {
             RandomSetting();
+            Obstruct1.SendMessage("RandomObstruct");
+            Obstruct2.SendMessage("RandomObstruct");
         }
     }
 
     void Start()
     {
-
+        
     }
 }

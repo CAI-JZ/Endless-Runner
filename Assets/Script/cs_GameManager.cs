@@ -8,13 +8,19 @@ public class cs_GameManager : MonoBehaviour
 
     GameObject Player;
 
+    private int Point;
+
 
     private void Awake()
     {
         Instance = this;
     }
 
-    
+    public int UpdatePoint(int point)
+    {
+        this.Point += point;
+        return Point;
+    }
 
 
     public void GameState(int GameState)

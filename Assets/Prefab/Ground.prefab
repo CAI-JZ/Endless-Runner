@@ -436,4 +436,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 674614be7c3e7834b831e29c2e608bda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Obstruct1: {fileID: 187909568591882405}
+  Obstruct2: {fileID: 1861752770}
   CurrentTrans: {fileID: 2412932200238608433}
