@@ -8,11 +8,34 @@ public class cs_CharacterController2D : MonoBehaviour
 
     private float speed = 0;
     private bool IsBournd = false;
+    private bool IsGaming = false;
+    private float MoveInput;
+    private float Airspeed = -1.5f;
 
     public void StartGame()
     {
-        speed = 40;
+        speed = 10;
+        m_ridgid.gravityScale = 15;
+        IsGaming = true;
 
+    }
+
+
+    void GameOver()
+    {
+        speed = 0;
+        IsGaming = false;
+        Debug.LogWarning("GameOver");
+    }
+
+    void AirState()
+    {
+        transform.position += Vector3.up * Airspeed * Time.deltaTime;
+        if (transform.position.y >= -12.5f || transform.position.y < -13.5f)
+        {
+            Airspeed = -Airspeed;
+            print(Airspeed);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -24,43 +47,38 @@ public class cs_CharacterController2D : MonoBehaviour
     }
 
 
-    void GameOver()
+    private void Move(float MoveOffset)
     {
-        speed = 0;
-        Debug.LogWarning("GameOver");
+        if (IsGaming)
+        {
+            m_ridgid.AddForce(new Vector2(MoveOffset * 250, 0));
+            m_ridgid.rotation = (MoveOffset * 20);
+        }
     }
 
-
-    private void Move(float MoveOffset, bool IsBound)
-    {  
-        m_ridgid.AddForce(new Vector2(MoveOffset * 100, 0));
-        m_ridgid.rotation = (MoveOffset * 20);
-       
-    }
-
-
+    
 
 
     // Start is called before the first frame update
     void Start()
     {
         m_ridgid = GetComponent<Rigidbody2D>();
-        StartGame();
+        m_ridgid.gravityScale = 0;
+        //StartGame();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // MoveForward
-        m_ridgid.MovePosition(new Vector2(transform.position.x, transform.position.y+speed * Time.deltaTime));
-
         // Move R/L
-        float MoveInput = Input.GetAxis("Horizontal");
-        Move(MoveInput,IsBournd);
+        MoveInput = Input.GetAxis("Horizontal");
+        
     }
 
     private void FixedUpdate()
     {
-       
+        // MoveForward
+        m_ridgid.MovePosition(new Vector2(transform.position.x, transform.position.y + speed * Time.deltaTime));
+        Move(MoveInput);
     }
 }

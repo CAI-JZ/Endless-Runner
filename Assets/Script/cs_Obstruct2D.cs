@@ -7,14 +7,14 @@ public class cs_Obstruct2D : MonoBehaviour
     cs_GameManager instance;
     
 
-
+    // set random obstruct location.
     void RandomObstruct()
     {
         int Pos = Random.Range(1,5);
         print(Pos);
         float ScaleX1 = Random.Range(0.75f,1.5f);
         float ScaleX2 = Random.Range(0.45f, 0.7f);
-        float Offset = Random.Range(-0.05f, 0.05f);
+        float Offset = Random.Range(-0.1f, 0.03f);
         switch (Pos)
         {
             case 1: //left
@@ -41,13 +41,12 @@ public class cs_Obstruct2D : MonoBehaviour
        
     }
 
-
+    // Touch obstruct -> GameOver
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.tag == "Player")
         {
             cs_GameManager.Instance.GameState(2);
-            Debug.LogWarning("1");
         }
 
     }

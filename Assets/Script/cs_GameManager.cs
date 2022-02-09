@@ -8,7 +8,9 @@ public class cs_GameManager : MonoBehaviour
 
     GameObject Player;
 
-    private int Point;
+    public  int Point = 0;
+    private int GameStateIndex;
+    public int FrontSize = 10;
 
 
     private void Awake()
@@ -18,29 +20,31 @@ public class cs_GameManager : MonoBehaviour
 
     public int UpdatePoint(int point)
     {
-        this.Point += point;
+        Point += point;
         return Point;
     }
 
+    
+
+    //BeforeStart 0;
+    //StartGame 1;
+    //GameOver 2;
 
     public void GameState(int GameState)
     {
-        
-        //BeforeStart 0;
-        //StartGame 1;
-        //GameOver 2;
-        if (GameState == 1)
+        GameStateIndex = GameState;
+        if (GameStateIndex == 1)
         {
             Debug.Log("game state: GameStart");
             Player.SendMessage("StartGame");
         }
-        else if (GameState == 2)
+        else if (GameStateIndex == 2)
         {
             Debug.Log("game state: GameOver");
             Player.SendMessage("GameOver");
         }
 
-        Debug.Log("game state:" + GameState);
+        Debug.Log("game state:" + GameStateIndex);
         
     }
 
@@ -49,11 +53,16 @@ public class cs_GameManager : MonoBehaviour
     void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
+        GameStateIndex = 0;
+      
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.anyKeyDown && GameStateIndex == 0)
+        {
+            GameState(1);
+        }
     }
 }
