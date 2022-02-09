@@ -79,6 +79,7 @@ public class cs_CharacterController2D : MonoBehaviour
     {
         // MoveForward
         m_ridgid.MovePosition(new Vector2(transform.position.x, transform.position.y + speed * Time.deltaTime));
+        // Move R/L
         Move(MoveInput);
     }
 }
