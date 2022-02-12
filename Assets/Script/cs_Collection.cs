@@ -5,7 +5,7 @@ using UnityEngine;
 public class cs_Collection : MonoBehaviour
 {
     protected float FadeSpeed = 0.03f;
-   
+    
 
     protected IEnumerator UnActive(SpriteRenderer Sprite)
     {
@@ -20,11 +20,12 @@ public class cs_Collection : MonoBehaviour
 
     }
 
+   
 
     // Start is called before the first frame update
     void Start()
     {
-        
+       
     }
 
     // Update is called once per frame

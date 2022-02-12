@@ -14,18 +14,26 @@ public class cs_Background : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
+            //cs_ObjectPool.Instance.PushObject(LightPrefab);
             GetComponent<Transform>().position += new Vector3(0, 36, 0);
             Obstruck1.SendMessage("RandomObstruct");
             Obstruck2.SendMessage("RandomObstruct");
-            cs_ObjectPool.Instance.PushObject(LightPrefab);
+            
+            NewLight();
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
+    void NewLight()
     {
         GameObject Light = cs_ObjectPool.Instance.GetObject(LightPrefab);
         Light.transform.position = transform.position;
+      
+    }
+    
+    // Start is called before the first frame update
+    void Start()
+    {
+        NewLight();
     }
 
     // Update is called once per frame

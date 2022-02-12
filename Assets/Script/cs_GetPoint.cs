@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class cs_GetPoint : cs_Collection
 {
-    cs_GameManager instance;
     SpriteRenderer sprite;
 
     private int Value = 10;
-    
+
+    private void Awake()
+    {
+        sprite = GetComponent<SpriteRenderer>();
+    }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -20,11 +24,15 @@ public class cs_GetPoint : cs_Collection
         }
     }
 
-    
+    private void OnEnable()
+    {
+        sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 1);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        sprite = GetComponent<SpriteRenderer>();
+        
     }
 
     // Update is called once per frame

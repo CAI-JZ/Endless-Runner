@@ -12,30 +12,30 @@ public class cs_Obstruct2D : MonoBehaviour
     {
         int Pos = Random.Range(1,5);
         print(Pos);
-        float ScaleX1 = Random.Range(0.75f,1.5f);
-        float ScaleX2 = Random.Range(0.45f, 0.7f);
+        float ScaleX1 = Random.Range(1f,1.5f);
+        float ScaleX2 = Random.Range(0.6f, 1.3f);
         float Offset = Random.Range(-0.1f, 0.03f);
         switch (Pos)
         {
             case 1: //left
                 transform.localPosition = new Vector3(-0.5f, transform.localPosition.y + Offset, transform.localPosition.z);
-                transform.localScale = new Vector3(ScaleX1, 0.05f, 1);
+                transform.localScale = new Vector3(transform.localScale.x* ScaleX1, 0.05f, 1);
                
                 break;
 
             case 2: //Center
                 transform.localPosition = new Vector3(Offset*2f, transform.localPosition.y + Offset, transform.localPosition.z);
-                transform.localScale = new Vector3(ScaleX2, 0.05f, 1);
+                transform.localScale = new Vector3(transform.localScale.x * ScaleX2, 0.05f, 1);
                 break;
 
             case 3: //Center
-                transform.localPosition = new Vector3(Offset * 5f, transform.localPosition.y + Offset, transform.localPosition.z);
-                transform.localScale = new Vector3(ScaleX2, 0.05f, 1);
+                transform.localPosition = new Vector3(Offset * 6f, transform.localPosition.y + Offset, transform.localPosition.z);
+                transform.localScale = new Vector3(transform.localScale.x * ScaleX2, 0.05f, 1);
                 break;
 
             case 4: //Right
                 transform.localPosition = new Vector3(0.5f, transform.localPosition.y + Offset, transform.localPosition.z);
-                transform.localScale = new Vector3(ScaleX1, 0.05f, 1);
+                transform.localScale = new Vector3(transform.localScale.x * ScaleX1, 0.05f, 1);
                 break;
         }
        

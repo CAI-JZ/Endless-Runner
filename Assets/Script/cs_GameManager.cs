@@ -5,6 +5,7 @@ using UnityEngine;
 public class cs_GameManager : MonoBehaviour
 {
     public static cs_GameManager Instance;
+    public GameObject LightPrefab;
 
     GameObject Player;
 
@@ -54,7 +55,16 @@ public class cs_GameManager : MonoBehaviour
     {
         Player = GameObject.FindGameObjectWithTag("Player");
         GameStateIndex = 0;
-      
+
+        int count = 5;
+        for (int i = 0; i< count; i++)
+        {
+            GameObject Light = cs_ObjectPool.Instance.GetObject(LightPrefab);
+            Light.transform.position = new Vector3(0, 0, 50);
+            Light.SetActive(false);
+        }
+       
+
     }
 
     // Update is called once per frame
