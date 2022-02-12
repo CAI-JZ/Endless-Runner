@@ -336,6 +336,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Obstruck1: {fileID: 7869036946300046548}
   Obstruck2: {fileID: 211866335}
+  LightPrefab: {fileID: 6221151051963589072, guid: ae2030a2f18c22a48926d50bc99a6874, type: 3}
 --- !u!61 &1470275366
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -18,6 +18,8 @@ public class cs_GUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Score.text = "Score: " + cs_GameManager.Instance.Point;
+        Score.text = string.Format("Score: {0}", cs_GameManager.Instance.Point);
+            
+            //"Score: " + cs_GameManager.Instance.Point;
     }
 }
