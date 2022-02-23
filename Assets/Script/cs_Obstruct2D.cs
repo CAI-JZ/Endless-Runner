@@ -4,14 +4,11 @@ using UnityEngine;
 
 public class cs_Obstruct2D : MonoBehaviour
 {
-    cs_GameManager instance;
-    
-
     // set random obstruct location.
     void RandomObstruct()
     {
         int Pos = Random.Range(1,5);
-        print(Pos);
+        //print(Pos);
         float ScaleX1 = Random.Range(1f,1.5f);
         float ScaleX2 = Random.Range(0.6f, 1.3f);
         float Offset = Random.Range(-0.1f, 0.03f);

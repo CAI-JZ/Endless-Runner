@@ -8,37 +8,52 @@ public class cs_Background : MonoBehaviour
     public GameObject Obstruck1;
     public GameObject Obstruck2;
     public GameObject LightPrefab;
+    private List<GameObject> RandomObjects = new List<GameObject>();
 
-
+   
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
         {
-            //cs_ObjectPool.Instance.PushObject(LightPrefab);
             GetComponent<Transform>().position += new Vector3(0, 36, 0);
             Obstruck1.SendMessage("RandomObstruct");
             Obstruck2.SendMessage("RandomObstruct");
-            
-            NewLight();
+            CheckUnuseObject();
+            int RandomNum = Random.Range(1, 3);
+            NewLight(RandomNum);
         }
     }
 
-    void NewLight()
-    {
-        GameObject Light = cs_ObjectPool.Instance.GetObject(LightPrefab);
-        Light.transform.position = transform.position;
-      
+    void NewLight(int Num)
+    {     
+        for (int i = 0; i < Num; i++)
+        {
+            float Offset = Random.Range(-2f, 2f);
+            GameObject Light = cs_ObjectPool.Instance.GetObject(LightPrefab);
+            Light.transform.position = transform.position + new Vector3(Offset, Offset*1.5f, 0);
+            RandomObjects.Add(Light);
+        }       
     }
+
+    void CheckUnuseObject()
+    {
+        if (RandomObjects.Count > 0) 
+        {
+            foreach (GameObject G in RandomObjects)
+            {
+                if (G.activeSelf)
+                {
+                    cs_ObjectPool.Instance.PushObject(G);    
+                }                
+            }
+            RandomObjects.Clear();
+        }
+    }
+   
     
     // Start is called before the first frame update
     void Start()
     {
-        NewLight();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        NewLight(1);
     }
 }

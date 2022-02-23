@@ -11,15 +11,20 @@ public class cs_CharacterController2D : MonoBehaviour
     private bool IsGaming = false;
     private float MoveInput;
     private float Airspeed = -1.5f;
+    
+
+    private void Awake()
+    {
+        m_ridgid = GetComponent<Rigidbody2D>();
+        m_ridgid.gravityScale = 0;
+    }
 
     public void StartGame()
     {
         speed = 10;
         m_ridgid.gravityScale = 15;
         IsGaming = true;
-
     }
-
 
     void GameOver()
     {
@@ -46,7 +51,6 @@ public class cs_CharacterController2D : MonoBehaviour
         }
     }
 
-
     private void Move(float MoveOffset)
     {
         if (IsGaming)
@@ -56,23 +60,11 @@ public class cs_CharacterController2D : MonoBehaviour
         }
     }
 
-    
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        m_ridgid = GetComponent<Rigidbody2D>();
-        m_ridgid.gravityScale = 0;
-        //StartGame();
-    }
-
-    // Update is called once per frame
     void Update()
     {
         // Move R/L
         MoveInput = Input.GetAxis("Horizontal");
-        
+    
     }
 
     private void FixedUpdate()
