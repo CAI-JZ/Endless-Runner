@@ -1,15 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class cs_GameManager : MonoBehaviour
 {
-    public static cs_GameManager Instance;
+   //-> Eager Loading
+    private static cs_GameManager instance;
+    private cs_GameManager() { }
+    //public static cs_GameManager Instance
+    //{
+    //    get 
+    //    {
+    //        // create logic to ceeate the instance
+    //        if (instance == null)
+    //        {
+    //            GameObject go = new GameObject("cs_GameManager");
+    //            go.AddComponent<cs_GameManager>();
+    //        }
+    //        return instance;
+    //    }
+
+    //}
+
+    public static cs_GameManager Instance() { return instance;}
 
     public GameObject LightPrefab;
-    public GameObject UIScore;
-    public GameObject UIMain;
-    public int Point = 0;
+    public GameObject GUIManager;
+    public GameObject Back1;
+    public GameObject Back2;
+    public GameObject Back3;
+   
+    public int Point {get; private set;}
     public int GameStateIndex;
 
     private List<GameObject> Collections = new List<GameObject>();
@@ -18,8 +40,8 @@ public class cs_GameManager : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
-
+        instance = this;
+        Point = 0;
         //Define Player
         Player = GameObject.FindGameObjectWithTag("Player");
 
@@ -27,16 +49,17 @@ public class cs_GameManager : MonoBehaviour
         int count = 10;
         for (int i = 0; i < count; i++)
         {
-            GameObject Light = cs_ObjectPool.Instance.GetObject(LightPrefab);
+            GameObject Light = ObjectPool.Instance.GetObject(LightPrefab);
             Light.transform.position = new Vector3(0, 0, 50);
             Collections.Add(Light);
         }
+        DontDestroyOnLoad(GameObject.FindGameObjectWithTag("DontDestory"));
     }
 
-    public int UpdatePoint(int point)
+    public void UpdatePoint(int point)
     {
         Point += point;
-        return Point;
+      
     }
 
     //GAMESTATE info
@@ -49,12 +72,17 @@ public class cs_GameManager : MonoBehaviour
         if (GameStateIndex == 1)
         {
             Debug.Log("game state: GameStart");
-            Player.SendMessage("StartGame");
+            
         }
         else if (GameStateIndex == 2)
         {
             Debug.Log("game state: GameOver");
             Player.SendMessage("GameOver");
+            GUIManager.SendMessage("GameEnd");
+
+            Back1.SendMessage("GameEnd");
+            Back2.SendMessage("GameEnd");
+            Back3.SendMessage("GameEnd");
         }
 
         Debug.Log("game state:" + GameStateIndex);
@@ -63,9 +91,17 @@ public class cs_GameManager : MonoBehaviour
 
     public void PlayBtuClick()
     {
-        UIMain.GetComponent<cs_GUIManager>().HideUI();
-        UIScore.GetComponent<cs_GUIManager>().ShowUI();
-        GameState(1);
+        GUIManager.SendMessage("GameBegin");
+        Player.SendMessage("StartGame");
+        GameStateIndex = 1;
+        Back1.SendMessage("GameStart");
+        Back2.SendMessage("GameStart");
+        Back3.SendMessage("GameStart");
+    }
+
+    public void Repaly()
+    {
+        SceneManager.LoadScene("2D");
     }
 
     void Start()
@@ -73,16 +109,28 @@ public class cs_GameManager : MonoBehaviour
         //Set Gamestate
         GameStateIndex = 0;
 
+      
+
         //Set GamePool Object state
         if (Collections.Count > 0)
         {
             foreach (GameObject G in Collections)
             {
-                cs_ObjectPool.Instance.PushObject(G);
+                ObjectPool.Instance.PushObject(G);
             }
         }
 
     }
+
+    //Templete of Delegate
+    public static int Num(int a)
+    {
+        int b = a;
+        return b;
+    }
+
+    Number LN = new Number(Num);
+
 }
 
 

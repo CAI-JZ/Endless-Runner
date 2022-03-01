@@ -7,11 +7,13 @@ public abstract class cs_Item : MonoBehaviour
     protected float FadeSpeed = 0.08f;
     protected SpriteRenderer sprite;
     protected Rigidbody2D m_rigidbody;
+    protected BoxCollider2D m_collider;
 
     protected virtual void Awake()
     {
         sprite = GetComponent<SpriteRenderer>();
         m_rigidbody = GetComponent<Rigidbody2D>();
+        m_collider = GetComponent<BoxCollider2D>();
     }
 
     protected IEnumerator UnActive(SpriteRenderer Sprite)
@@ -22,39 +24,25 @@ public abstract class cs_Item : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
         //Destory Object
-        cs_ObjectPool.Instance.PushObject(gameObject);
+        ObjectPool.Instance.PushObject(gameObject);
+    }
+
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (sprite != null)
+        {
+            StartCoroutine(UnActive(sprite));
+        }
     }
 
     //Reset color.alpha = 1;
     protected virtual void OnEnable()
     {
-        sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 1);
-    }
-
-    protected virtual void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Player")
-        { 
-            TriggerPlayerEvent();
-            StartCoroutine(UnActive(sprite));
-        }
-        if(collision.tag == "Enemy")
+        if (sprite != null)
         {
-            TriggerEnemyEvent();
-            StartCoroutine(UnActive(sprite));
-        } 
-       
+            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 1);
+        }
+        
     }
-
-    protected virtual void TriggerPlayerEvent()
-    { 
-    
-    }
-
-    protected virtual void TriggerEnemyEvent()
-    {
-
-    }
-
-
+   
 }

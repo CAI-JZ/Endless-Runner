@@ -8,6 +8,7 @@ TagManager:
   - Collection
   - Enemy
   - Sword
+  - DontDestory
   layers:
   - Default
   - TransparentFX

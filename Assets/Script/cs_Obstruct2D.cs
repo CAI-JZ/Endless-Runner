@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class cs_Obstruct2D : MonoBehaviour
+public class cs_Obstruct2D : cs_Item
 {
     // set random obstruct location.
     void RandomObstruct()
@@ -37,28 +37,21 @@ public class cs_Obstruct2D : MonoBehaviour
         }
        
     }
-
-    // Touch obstruct -> GameOver
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.collider.tag == "Player")
-        {
-            cs_GameManager.Instance.GameState(2);
-        }
-
-    }
-     
-
-
+ 
     // Start is called before the first frame update
     void Start()
     {
         RandomObstruct();
     }
 
-    // Update is called once per frame
-    void Update()
+    // Touch obstruct -> GameOver
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        
+        if (collision.collider.tag == "Player")
+        {
+            cs_GameManager.Instance().GameState(2);
+        }
     }
+
+    
 }

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+delegate int Number(int n);
+
 public class cs_Background : MonoBehaviour
 {
 
@@ -10,7 +12,11 @@ public class cs_Background : MonoBehaviour
     public GameObject LightPrefab;
     private List<GameObject> RandomObjects = new List<GameObject>();
 
-   
+    //private void Awake()
+    //{
+    //    NewLight(1);
+    //}
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
@@ -29,7 +35,7 @@ public class cs_Background : MonoBehaviour
         for (int i = 0; i < Num; i++)
         {
             float Offset = Random.Range(-2f, 2f);
-            GameObject Light = cs_ObjectPool.Instance.GetObject(LightPrefab);
+            GameObject Light = ObjectPool.Instance.GetObject(LightPrefab);
             Light.transform.position = transform.position + new Vector3(Offset, Offset*1.5f, 0);
             RandomObjects.Add(Light);
         }       
@@ -43,17 +49,21 @@ public class cs_Background : MonoBehaviour
             {
                 if (G.activeSelf)
                 {
-                    cs_ObjectPool.Instance.PushObject(G);    
+                    ObjectPool.Instance.PushObject(G);    
                 }                
             }
             RandomObjects.Clear();
         }
     }
-   
-    
-    // Start is called before the first frame update
-    void Start()
+
+    public void GameStart()
     {
         NewLight(1);
+    }
+
+    public void GameEnd()
+    {
+        //throw new System.NotImplementedException();
+        CheckUnuseObject();
     }
 }
