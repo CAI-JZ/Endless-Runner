@@ -49,7 +49,7 @@ public class cs_Obstruct2D : cs_Item
     {
         if (collision.collider.tag == "Player")
         {
-            cs_GameManager.Instance().GameState(2);
+            GameManager.Instance.GameState(2);
         }
     }
 

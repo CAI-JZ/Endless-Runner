@@ -7,8 +7,6 @@ public class ObjectPool
     // Singleton
     private static ObjectPool instance;
     private ObjectPool() {}
-    //public static cs_ObjectPool Instance() { return instance; }
-    
 
     //-> lazy loading
     public static ObjectPool Instance

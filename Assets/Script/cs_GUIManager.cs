@@ -14,6 +14,8 @@ public class cs_GUIManager : MonoBehaviour
     CanvasGroup MainUI;
     [SerializeField]
     CanvasGroup GameOver;
+    [SerializeField]
+    CanvasGroup HighScore;
 
     private float FadeSpeed = 0.05f;
 
@@ -34,7 +36,8 @@ public class cs_GUIManager : MonoBehaviour
 
     public void GameEnd()
     {
-        GameOver.gameObject.SetActive(true);
+        ShowUI(GameOver);
+        HideUI(Score);
     }
 
     private void ShowUI(CanvasGroup CG)
@@ -60,6 +63,10 @@ public class cs_GUIManager : MonoBehaviour
 
     private IEnumerator Show(CanvasGroup C)
     {
+        if (!C.gameObject.activeSelf)
+        {
+            C.gameObject.SetActive(true);
+        }
         while (C.alpha < 1)
         {
             C.alpha += FadeSpeed;
@@ -69,14 +76,13 @@ public class cs_GUIManager : MonoBehaviour
 
     public void RestartGame()
     {
-               GameOver.gameObject.SetActive(false);
+        HighScore.gameObject.SetActive(false);
         if (!MainUI.gameObject.activeSelf)
         {
             MainUI.gameObject.SetActive(true);
-            MainUI.alpha = 1;
+            ShowUI(MainUI);
         }
-        Score.alpha = 0;
-        
+        GameManager.Instance.Repaly();
     }
 
 

@@ -3,27 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class cs_GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
    //-> Eager Loading
-    private static cs_GameManager instance;
-    private cs_GameManager() { }
-    //public static cs_GameManager Instance
-    //{
-    //    get 
-    //    {
-    //        // create logic to ceeate the instance
-    //        if (instance == null)
-    //        {
-    //            GameObject go = new GameObject("cs_GameManager");
-    //            go.AddComponent<cs_GameManager>();
-    //        }
-    //        return instance;
-    //    }
-
-    //}
-
-    public static cs_GameManager Instance() { return instance;}
+    public static GameManager Instance { get; private set; }
+    private GameManager() { }
+    
 
     public GameObject LightPrefab;
     public GameObject GUIManager;
@@ -31,7 +16,6 @@ public class cs_GameManager : MonoBehaviour
     public GameObject Back2;
     public GameObject Back3;
    
-    public int Point {get; private set;}
     public int GameStateIndex;
 
     private List<GameObject> Collections = new List<GameObject>();
@@ -40,8 +24,9 @@ public class cs_GameManager : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
-        Point = 0;
+       
+       Instance = this;
+
         //Define Player
         Player = GameObject.FindGameObjectWithTag("Player");
 
@@ -54,12 +39,6 @@ public class cs_GameManager : MonoBehaviour
             Collections.Add(Light);
         }
         DontDestroyOnLoad(GameObject.FindGameObjectWithTag("DontDestory"));
-    }
-
-    public void UpdatePoint(int point)
-    {
-        Point += point;
-      
     }
 
     //GAMESTATE info

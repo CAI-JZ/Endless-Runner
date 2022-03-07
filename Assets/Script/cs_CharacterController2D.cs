@@ -91,7 +91,7 @@ public class cs_CharacterController2D : MonoBehaviour,IHit
         }
         else
         {
-            cs_GameManager.Instance().GameState(2);
+            GameManager.Instance.GameState(2);
             print("GameOver");
             return true;   
         }

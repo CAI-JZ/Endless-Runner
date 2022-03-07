@@ -2,19 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBase : MonoBehaviour
+public class cs_Enemy : MonoBehaviour,IHit
 {
-    [SerializeField]
-    private EnemyUnit[] EnemyUnits;
+    public GameObject ShortSword;
+    public float Speed = 6f;
+    public float dis = 10f;
+    
 
-    Rigidbody2D Rigid;
-
-    private EnemyUnit Enemy;
     private float DistanceAixsY;
     private bool IsInRange;
     private bool AlreadyAttack;
+    public float TimeBetweenAttack = 1.8f;
+    private int Value = 50;
 
-    private GameObject Player;
+    GameObject Player;
+    Rigidbody2D Rigid;
 
     private void Awake()
     {
@@ -22,29 +24,17 @@ public class EnemyBase : MonoBehaviour
         Rigid = GetComponent<Rigidbody2D>();
     }
 
-    private void OnEnable()
-    {
-        //Simple Math of Random EnemyType
-        int r = Random.Range(1, 100);
-        int R = r % EnemyUnits.Length;
-        print(R);
-        Enemy = EnemyUnits[R];
-        //Inisially the Enemy
-        GetComponent<SpriteRenderer>().sprite = Enemy.ArtWork;
-        GetComponent<BoxCollider2D>().size = new Vector2(Enemy.SizeX, Enemy.SizeY);
-
-    }
-
+    // AttackPlayer
     void Attack()
     {
-        if (IsInRange && !AlreadyAttack && Enemy.CanAttack)
+        if (IsInRange && !AlreadyAttack)
         {
-            GameObject sword = ObjectPool.Instance.GetObject(Enemy.Bullet);
+            GameObject sword = ObjectPool.Instance.GetObject(ShortSword);
             sword.transform.position = new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z);
             sword.GetComponent<cs_Bullet>().SetSpeed(-transform.up);
 
             AlreadyAttack = true;
-            Invoke(nameof(ResetAttack), Enemy.AttackCoolDown);
+            Invoke(nameof(ResetAttack), TimeBetweenAttack);
         }
     }
     private void ResetAttack()
@@ -53,40 +43,48 @@ public class EnemyBase : MonoBehaviour
     }
     void ChasePlayer()
     {
-        if (IsInRange && Enemy.CanChasingPlayer)
+        if (IsInRange)
         {
             DistanceAixsY = transform.position.x - Player.transform.position.x;
             if (DistanceAixsY <= -0.1f)
             {
-                Rigid.MovePosition(new Vector2(transform.position.x + Enemy.Speed * Time.deltaTime, transform.position.y));
+                Rigid.MovePosition(new Vector2(transform.position.x + Speed * Time.deltaTime, transform.position.y));
                 //print("Move Right");
             }
             else if (DistanceAixsY >= 0.1f)
             {
-                Rigid.MovePosition(new Vector2(transform.position.x - Enemy.Speed * Time.deltaTime, transform.position.y));
+                Rigid.MovePosition(new Vector2(transform.position.x - Speed * Time.deltaTime, transform.position.y));
                 //print("Move Left");
             }
             Attack();
         }
-
+        
     }
 
     void Update()
     {
-        IsInRange = Mathf.Abs(transform.position.y - Player.transform.position.y) <= Enemy.DisToAttack;
+        IsInRange = Mathf.Abs(transform.position.y - Player.transform.position.y) <= dis;
     }
 
     private void FixedUpdate()
     {
         ChasePlayer();
-
     }
 
+    public bool Hit()
+    {
+        ObjectPool.Instance.PushObject(gameObject);
+        //cs_GameManager.Instance().UpdatePoint(Value);
+        Debug.LogWarning("Enemy Die");
+        return true;
+    }
+
+    //Player Hit -> GAMEOVER
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.tag == "Player")
         {
-            cs_GameManager.Instance().GameState(2);
+            GameManager.Instance.GameState(2);
         }
     }
 }
