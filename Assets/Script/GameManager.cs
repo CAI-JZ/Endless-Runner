@@ -70,6 +70,7 @@ public class GameManager : MonoBehaviour
 
     public void PlayBtuClick()
     {
+        SeedGenerator.Instance.ApplySeed();
         GUIManager.SendMessage("GameBegin");
         Player.SendMessage("StartGame");
         GameStateIndex = 1;

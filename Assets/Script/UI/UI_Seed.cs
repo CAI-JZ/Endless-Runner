@@ -10,13 +10,13 @@ public class UI_Seed : MonoBehaviour
 
     private void Start()
     {
-        ShowSeed.text = SeedGenerator.Instance.CurrentSeed.ToString();
+        ShowSeed.text = SeedGenerator.Instance.SeedToShow.ToString();
     }
 
     public void OnButtonRandomSeed()
     {
         SeedGenerator.Instance.GenerateRandomSeed();
-        ShowSeed.text = SeedGenerator.Instance.CurrentSeed.ToString();
+        ShowSeed.text = SeedGenerator.Instance.SeedToShow.ToString();
     }
 
     public void OnButtonApplySeed()
