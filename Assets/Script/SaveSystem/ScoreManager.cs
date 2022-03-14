@@ -7,6 +7,10 @@ public class ScoreManager : MonoBehaviour
     public static ScoreManager Instance { get; private set; }
     private ScoreManager() { }
 
+    float Parameter = 1;
+    private float KeepTime = 5;
+    private GameObject Player;
+
     private void Awake()
     {
         if (Instance == null)
@@ -14,6 +18,8 @@ public class ScoreManager : MonoBehaviour
             Instance = this;
         }
         LoadHighScoreDatas();//?? Maybe Have other way£»
+
+        Player = GameObject.FindGameObjectWithTag("Player");
     }
 
     public float Score => NewScore;
@@ -24,10 +30,33 @@ public class ScoreManager : MonoBehaviour
     string PlayerName = " - ";
     float NewScore = 0;
 
+
     public void UpdateScore( float value)
     {
-        NewScore += value;
+        NewScore += value * Parameter;
     }
+
+    public void DoublePoint()
+    {
+        Parameter = 2;    
+        KeepTime += 2;
+        StartCoroutine(Cold());
+        
+    }
+
+    public IEnumerator Cold()
+    {
+        while (KeepTime > 0)
+        {
+            KeepTime = KeepTime - Time.deltaTime;
+            print(KeepTime);
+            yield return new WaitForFixedUpdate();
+        }
+        Parameter = 1;
+        Player.transform.GetChild(1).gameObject.SetActive(false);
+        print("²»ÊÇË«±¶ÁË");
+    }
+
 
     public void UpdatePlayerName(string name)
     {

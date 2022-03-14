@@ -18,7 +18,7 @@ public class cs_Enemy : MonoBehaviour,IHit
     GameObject Player;
     Rigidbody2D Rigid;
 
-    private void Awake()
+    private void OnEnable()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
         Rigid = GetComponent<Rigidbody2D>();

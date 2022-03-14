@@ -18,8 +18,7 @@ public class EnemyBase : MonoBehaviour
 
     private void Awake()
     {
-        Player = GameObject.FindGameObjectWithTag("Player");
-        Rigid = GetComponent<Rigidbody2D>();
+       
     }
 
     private void OnEnable()
@@ -33,6 +32,8 @@ public class EnemyBase : MonoBehaviour
         GetComponent<SpriteRenderer>().sprite = Enemy.ArtWork;
         GetComponent<BoxCollider2D>().size = new Vector2(Enemy.SizeX, Enemy.SizeY);
 
+        Player = GameObject.FindGameObjectWithTag("Player");
+        Rigid = GetComponent<Rigidbody2D>();
     }
 
     void Attack()

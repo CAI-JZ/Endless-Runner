@@ -9,7 +9,7 @@ public class cs_GUIManager : MonoBehaviour
     //To Control the Show or Hide of UI in GAME
     
     [SerializeField]
-    CanvasGroup Score;
+    CanvasGroup Gameplay;
     [SerializeField]
     CanvasGroup MainUI;
     [SerializeField]
@@ -31,13 +31,13 @@ public class cs_GUIManager : MonoBehaviour
     public void GameBegin()
     {
         HideUI(MainUI);
-        ShowUI(Score);
+        ShowUI(Gameplay);
     }
 
     public void GameEnd()
     {
         ShowUI(GameOver);
-        HideUI(Score);
+        HideUI(Gameplay);
     }
 
     private void ShowUI(CanvasGroup CG)

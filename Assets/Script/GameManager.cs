@@ -9,8 +9,6 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     private GameManager() { }
     
-
-    public GameObject LightPrefab;
     public GameObject GUIManager;
     public GameObject Back1;
     public GameObject Back2;
@@ -18,7 +16,6 @@ public class GameManager : MonoBehaviour
    
     public int GameStateIndex;
 
-    private List<GameObject> Collections = new List<GameObject>();
     GameObject Player;
 
 
@@ -29,15 +26,6 @@ public class GameManager : MonoBehaviour
 
         //Define Player
         Player = GameObject.FindGameObjectWithTag("Player");
-
-        //Create CollectionPool
-        int count = 10;
-        for (int i = 0; i < count; i++)
-        {
-            GameObject Light = ObjectPool.Instance.GetObject(LightPrefab);
-            Light.transform.position = new Vector3(0, 0, 50);
-            Collections.Add(Light);
-        }
         DontDestroyOnLoad(GameObject.FindGameObjectWithTag("DontDestory"));
     }
 
@@ -89,17 +77,8 @@ public class GameManager : MonoBehaviour
         //Set Gamestate
         GameStateIndex = 0;
 
-      
-
         //Set GamePool Object state
-        if (Collections.Count > 0)
-        {
-            foreach (GameObject G in Collections)
-            {
-                ObjectPool.Instance.PushObject(G);
-            }
-        }
-
+       
     }
 
     //Templete of Delegate

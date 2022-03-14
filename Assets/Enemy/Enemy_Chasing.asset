@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Enemy_Chasing
   m_EditorClassIdentifier: 
   ArtWork: {fileID: 21300000, guid: cfbfa3b7cce603f4f8052ecadb05ae88, type: 3}
-  Speed: 1.5
+  Speed: 2
   Value: 45
   SizeX: 0.81
   SizeY: 0.81

@@ -15,18 +15,11 @@ public class cs_CharacterController2D : MonoBehaviour,IHit
     //PortectCircle;
     private int PortectValue;
 
-    //Attack
-    private int BulletNum;
-    [SerializeField]
-    GameObject Bullet;
-    private bool IsAttack;
-
 
     private void Awake()
     {
         m_ridgid = GetComponent<Rigidbody2D>();
         m_ridgid.gravityScale = 0;
-        BulletNum = 10;
         //IsPortect = false;
         PortectValue = 0;
         
@@ -68,10 +61,6 @@ public class cs_CharacterController2D : MonoBehaviour,IHit
     {
         // Move R/L
         MoveInput = Input.GetAxis("Horizontal");
-        //Attack
-        IsAttack = Input.GetKeyDown(KeyCode.Mouse0);
-
-        Fire(IsAttack);
     }
 
     private void FixedUpdate()
@@ -122,24 +111,6 @@ public class cs_CharacterController2D : MonoBehaviour,IHit
             collision.GetComponent<SpriteRenderer>().flipY = true;
             collision.GetComponent<Rigidbody2D>().AddForce(transform.up * 3f, ForceMode2D.Impulse);
             PortectValue--;
-        }
-    }
-
-    // --> Bullet
-    public void GetBullet()
-    {
-        BulletNum++;
-    }
-
-    private void Fire(bool Click)
-    {
-        if (Click && BulletNum>0)
-        {
-            GameObject bullet = ObjectPool.Instance.GetObject(Bullet);
-            Bullet.transform.position = new Vector3(transform.position.x, transform.position.y + 1.1f, transform.position.z);
-            //Bullet.GetComponent<Rigidbody2D>().gravityScale = -1;
-            Bullet.GetComponent<Rigidbody2D>().AddForce(transform.up * 3f, ForceMode2D.Impulse);
-            BulletNum--;
         }
     }
 }

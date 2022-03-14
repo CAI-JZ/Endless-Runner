@@ -337,6 +337,9 @@ MonoBehaviour:
   Obstruck1: {fileID: 7869036946300046548}
   Obstruck2: {fileID: 211866335}
   LightPrefab: {fileID: 6221151051963589072, guid: ae2030a2f18c22a48926d50bc99a6874, type: 3}
+  EnemyPrefab: {fileID: 8973115367837614942, guid: 58685ef50b427064885a0cbe154c19ba, type: 3}
+  EnergyPrefab: {fileID: 4924897689164023617, guid: 71e7a328e2052504db454b6a971227b7, type: 3}
+  DoublePoint: {fileID: 2119820058763644780, guid: c949958133d66c74cae558571747a95d, type: 3}
 --- !u!61 &1470275366
 BoxCollider2D:
   m_ObjectHideFlags: 0
