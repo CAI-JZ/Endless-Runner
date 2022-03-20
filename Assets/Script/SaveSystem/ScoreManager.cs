@@ -16,8 +16,7 @@ public class ScoreManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-        }
-        LoadHighScoreDatas();//?? Maybe Have other way；
+        }   
 
         Player = GameObject.FindGameObjectWithTag("Player");
     }
@@ -30,6 +29,11 @@ public class ScoreManager : MonoBehaviour
     string PlayerName = " - ";
     float NewScore = 0;
 
+
+    private void Start()
+    {
+        LoadHighScoreDatas();//?? Maybe Have other way；
+    }
 
     public void UpdateScore( float value)
     {
@@ -49,12 +53,12 @@ public class ScoreManager : MonoBehaviour
         while (KeepTime > 0)
         {
             KeepTime = KeepTime - Time.deltaTime;
-            print(KeepTime);
+            //print(KeepTime);
             yield return new WaitForFixedUpdate();
         }
         Parameter = 1;
         Player.transform.GetChild(1).gameObject.SetActive(false);
-        print("不是双倍了");
+        //print("不是双倍了");
     }
 
 

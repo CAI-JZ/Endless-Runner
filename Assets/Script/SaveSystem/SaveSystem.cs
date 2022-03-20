@@ -3,16 +3,20 @@ using UnityEngine;
 
 public static class SaveSystem 
 {
+    private static string Key = "kljsdkkdlo4454GG";
+
+
     public static void SaveData(string SaveFileName, object SaveFileData)
     {
-        var json = JsonUtility.ToJson(SaveFileData);
+        var Enjson = JsonUtility.ToJson(SaveFileData);
+        var json = AESEncrypt.Encrypt(Key, Enjson);
         var path = Path.Combine(Application.persistentDataPath, SaveFileName);
 
         try
         {
             File.WriteAllText(path, json);
-            Debug.Log($"Susscessfully saved data to {path}.");
-#if UNITY_EDITOR
+            
+            #if UNITY_EDITOR
             Debug.Log($"Susscessfully saved data to {path}.");
             #endif
         }
@@ -30,7 +34,8 @@ public static class SaveSystem
         
         try
         {
-            var json = File.ReadAllText(path);
+            var EnJson = File.ReadAllText(path);
+            string json = AESEncrypt.Decrypt(Key,EnJson);
             var data = JsonUtility.FromJson<T>(json);
             return data;
         }
