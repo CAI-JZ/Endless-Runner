@@ -9,7 +9,7 @@ public static class SaveSystem
     public static void SaveData(string SaveFileName, object SaveFileData)
     {
         var Enjson = JsonUtility.ToJson(SaveFileData);
-        var json = AESEncrypt.Encrypt(Key, Enjson);
+        var json = AESEncrypt.Encrypt(Key, Enjson); 
         var path = Path.Combine(Application.persistentDataPath, SaveFileName);
 
         try
@@ -35,7 +35,10 @@ public static class SaveSystem
         try
         {
             var EnJson = File.ReadAllText(path);
-            string json = AESEncrypt.Decrypt(Key,EnJson);
+            var json = AESEncrypt.Decrypt(Key,EnJson);
+            #if UNITY_EDITOR
+            Debug.Log($"Decrypt json file content: {json}.");
+            #endif
             var data = JsonUtility.FromJson<T>(json);
             return data;
         }
