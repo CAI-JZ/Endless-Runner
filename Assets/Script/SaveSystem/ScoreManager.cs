@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,7 +22,7 @@ public class ScoreManager : MonoBehaviour
         Player = GameObject.FindGameObjectWithTag("Player");
     }
 
-    public float Score => NewScore;
+    public float Score => (float)Math.Truncate( NewScore);
     public string playerName => PlayerName;
     public bool HasNewScore => NewScore > LoadHighScoreDatas().ScoreList[9].Score;
 
@@ -35,9 +36,24 @@ public class ScoreManager : MonoBehaviour
         LoadHighScoreDatas();//?? Maybe Have other way£»
     }
 
+    private void FixedUpdate()
+    {
+        ScorePreSecend();
+    }
+
+    void ScorePreSecend()
+    {
+        float value = 0; 
+        if (GameManager.Instance.GameStateIndex == 1)
+        { 
+            value += (Time.deltaTime*2);
+            UpdateScore(value);
+        }
+    }
+
     public void UpdateScore( float value)
     {
-        NewScore += value * Parameter;
+        NewScore +=value * Parameter;
     }
 
     public void DoublePoint()
@@ -94,7 +110,7 @@ public class ScoreManager : MonoBehaviour
     {
         var PlayerScore = LoadHighScoreDatas();
 
-        PlayerScore.ScoreList.Add(new PlayerScore(PlayerName, NewScore));
+        PlayerScore.ScoreList.Add(new PlayerScore(PlayerName, Score));
         PlayerScore.ScoreList.Sort((x, y) => y.Score.CompareTo(x.Score));
 
         SaveSystem.SaveData(PLAYER_DATA_FILENAME, PlayerScore);
