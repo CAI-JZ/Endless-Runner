@@ -18,12 +18,22 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField]
     private GameObject DoublePoint;
 
+    
     private List<GameObject> RandomObjects = new List<GameObject>();
     private List<GameObject> PoolObjects = new List<GameObject>();
 
     private void Awake()
     {
-        PrepareObjects();
+        try 
+        {
+            PrepareObjects();
+        }
+        catch (System.Exception exception)
+        {
+            #if UNITY_EDITOR
+            Debug.LogError($"Failed to preparelevel. \n{exception}");
+            #endif
+        }
     }
 
     private void Start()
@@ -35,6 +45,7 @@ public class LevelGenerator : MonoBehaviour
                 ObjectPool.Instance.PushObject(pg);
             }
         }
+        PoolObjects.Clear();
     }
 
     void PrepareObjects()

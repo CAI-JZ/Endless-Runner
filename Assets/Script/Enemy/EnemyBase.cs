@@ -18,7 +18,6 @@ public class EnemyBase : MonoBehaviour
 
     private void Awake()
     {
-       
     }
 
     private void OnEnable()
@@ -32,6 +31,7 @@ public class EnemyBase : MonoBehaviour
         GetComponent<SpriteRenderer>().sprite = Enemy.ArtWork;
         GetComponent<BoxCollider2D>().size = new Vector2(Enemy.SizeX, Enemy.SizeY);
 
+      
         Player = GameObject.FindGameObjectWithTag("Player");
         Rigid = GetComponent<Rigidbody2D>();
     }
@@ -75,6 +75,7 @@ public class EnemyBase : MonoBehaviour
 
     void Update()
     {
+        if(GameManager.Instance.GameStateIndex == 1)
         IsInRange = Mathf.Abs(transform.position.y - Player.transform.position.y) <= Enemy.DisToAttack;
     }
 

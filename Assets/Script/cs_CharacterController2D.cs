@@ -11,18 +11,15 @@ public class cs_CharacterController2D : MonoBehaviour,IHit
     private float MoveInput;
     private float Airspeed = -1.5f;
 
-    
-    //PortectCircle;
-    private int PortectValue;
-
+    GameObject ProtectCircle;
 
     private void Awake()
     {
         m_ridgid = GetComponent<Rigidbody2D>();
         m_ridgid.gravityScale = 0;
         //IsPortect = false;
-        PortectValue = 0;
-        
+        ProtectCircle = transform.Find("ProtectCricle").gameObject;
+
     }
 
     public void StartGame()
@@ -74,7 +71,7 @@ public class cs_CharacterController2D : MonoBehaviour,IHit
 
     public bool Hit()
     {
-        if (PortectValue > 0)
+        if (ProtectCircle.activeSelf)
         {
             return false;
         }
@@ -84,33 +81,20 @@ public class cs_CharacterController2D : MonoBehaviour,IHit
             print("GameOver");
             return true;   
         }
-        //throw new System.NotImplementedException();
-        
     }
 
     // --> Portacted Circle
     public void GetPortect()
     {
-        if (PortectValue > 0)
+        if (ProtectCircle.activeSelf)
         {
-            PortectValue += 5;
-            print(PortectValue);
+            ProtectCircle.SendMessage("AddPower");
         }
         else
         {
-            PortectValue = 5;
+            ProtectCircle.SetActive(true);
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Sword" && PortectValue > 0)
-        {
-            print(PortectValue);
-            collision.GetComponent<Rigidbody2D>().gravityScale = -1;
-            collision.GetComponent<SpriteRenderer>().flipY = true;
-            collision.GetComponent<Rigidbody2D>().AddForce(transform.up * 3f, ForceMode2D.Impulse);
-            PortectValue--;
-        }
-    }
+   
 }
