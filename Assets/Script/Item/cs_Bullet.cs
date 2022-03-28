@@ -5,7 +5,6 @@ using UnityEngine;
 public class cs_Bullet : cs_Item
 {
     public float Speed = 3;
-    private float GravityScale = 0.3f;
     public float time;
     private float Timeuse;
 
@@ -23,8 +22,7 @@ public class cs_Bullet : cs_Item
             {
                 base.OnTriggerEnter2D(collision);
             }          
-        }
-        
+        } 
     }
 
     protected override void OnEnable()

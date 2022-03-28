@@ -8,7 +8,7 @@ public class ScoreManager : MonoBehaviour
     public static ScoreManager Instance { get; private set; }
     private ScoreManager() { }
 
-    float Parameter = 1;
+    float ScoreParameter = 1;
     private float KeepTime = 5;
     private GameObject Player;
 
@@ -44,21 +44,21 @@ public class ScoreManager : MonoBehaviour
     void ScorePreSecend()
     {
         float value = 0; 
-        if (GameManager.Instance.GameStateIndex == 1)
+        if (GameManager.Instance._state == 1)
         { 
-            value += (Time.deltaTime*2);
+            value += (Time.deltaTime*2)* ScoreParameter;
             UpdateScore(value);
         }
     }
 
     public void UpdateScore( float value)
     {
-        NewScore +=value * Parameter;
+        NewScore +=value * ScoreParameter;
     }
 
     public void DoublePoint()
     {
-        Parameter = 2;    
+        ScoreParameter = 2;    
         KeepTime += 2;
         StartCoroutine(Cold());
         
@@ -72,7 +72,7 @@ public class ScoreManager : MonoBehaviour
             //print(KeepTime);
             yield return new WaitForFixedUpdate();
         }
-        Parameter = 1;
+        ScoreParameter = 1;
         Player.transform.GetChild(1).gameObject.SetActive(false);
         //print("²»ÊÇË«±¶ÁË");
     }

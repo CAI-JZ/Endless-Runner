@@ -46,6 +46,9 @@ public class LevelGenerator : MonoBehaviour
             }
         }
         PoolObjects.Clear();
+
+        GameManager.Instance.whenGameStart += GenerateLevel;
+        GameManager.Instance.whenGameOver += CheckUnuseObject;
     }
 
     void PrepareObjects()

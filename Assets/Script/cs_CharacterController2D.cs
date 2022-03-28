@@ -19,12 +19,17 @@ public class cs_CharacterController2D : MonoBehaviour,IHit
         m_ridgid.gravityScale = 0;
         //IsPortect = false;
         ProtectCircle = transform.Find("ProtectCricle").gameObject;
+    }
 
+    private void Start()
+    {
+        GameManager.Instance.whenGameStart += StartGame;
+        GameManager.Instance.whenGameOver += GameOver;
     }
 
     public void StartGame()
     {
-        speed = 10;
+        speed = 9;
         m_ridgid.gravityScale = 15;
         IsGaming = true;
     }
@@ -78,7 +83,6 @@ public class cs_CharacterController2D : MonoBehaviour,IHit
         else
         {
             GameManager.Instance.GameState(2);
-            print("GameOver");
             return true;   
         }
     }

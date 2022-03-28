@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class cs_FollowPlayer : MonoBehaviour
+public class Camera : MonoBehaviour
 {
     private GameObject Player;
     private Vector3 PlayerPos;
@@ -18,10 +18,7 @@ public class cs_FollowPlayer : MonoBehaviour
     void Update()
     {
         PlayerPos = Player.GetComponent<Transform>().position;
-        transform.position = new Vector3(0, PlayerPos.y+3.5f, PlayerPos.z-10);
+        transform.position = new Vector3(0, PlayerPos.y + 3.5f, PlayerPos.z - 10);
     }
 
-    
 }
-
-

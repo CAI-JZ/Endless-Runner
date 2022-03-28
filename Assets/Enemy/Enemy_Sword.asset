@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ArtWork: {fileID: 21300000, guid: ab79e96d8b0e1bf4badf84d46440f439, type: 3}
   Speed: 2
-  Value: 50
+  Value: 35
   SizeX: 0.81
   SizeY: 0.81
   CanChasingPlayer: 1

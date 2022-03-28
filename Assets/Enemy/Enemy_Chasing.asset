@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Enemy_Chasing
   m_EditorClassIdentifier: 
   ArtWork: {fileID: 21300000, guid: cfbfa3b7cce603f4f8052ecadb05ae88, type: 3}
-  Speed: 2
-  Value: 45
+  Speed: 1.2
+  Value: 20
   SizeX: 0.81
   SizeY: 0.81
   CanChasingPlayer: 1
   CanAttack: 0
-  DisToAttack: 4
+  DisToAttack: 8
   AttackCoolDown: 0
   Bullet: {fileID: 0}

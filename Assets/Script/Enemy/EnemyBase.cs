@@ -13,25 +13,22 @@ public class EnemyBase : MonoBehaviour
     private float DistanceAixsY;
     private bool IsInRange;
     private bool AlreadyAttack;
+    private float Value;
+    public float _value => Value;
 
     private GameObject Player;
-
-    private void Awake()
-    {
-    }
 
     private void OnEnable()
     {
         //Simple Math of Random EnemyType
         int r = Random.Range(1, 100);
         int R = r % EnemyUnits.Length;
-        print(R);
         Enemy = EnemyUnits[R];
         //Inisially the Enemy
         GetComponent<SpriteRenderer>().sprite = Enemy.ArtWork;
         GetComponent<BoxCollider2D>().size = new Vector2(Enemy.SizeX, Enemy.SizeY);
-
-      
+        Value = Enemy.Value;
+  
         Player = GameObject.FindGameObjectWithTag("Player");
         Rigid = GetComponent<Rigidbody2D>();
     }
@@ -73,9 +70,17 @@ public class EnemyBase : MonoBehaviour
 
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.tag == "Player" && ProtectCricle.IsProtect)
+        {
+            GameManager.Instance.GameState(2);
+        }
+    }
+
     void Update()
     {
-        if(GameManager.Instance.GameStateIndex == 1)
+        if(GameManager.Instance._state == 1)
         IsInRange = Mathf.Abs(transform.position.y - Player.transform.position.y) <= Enemy.DisToAttack;
     }
 
@@ -85,11 +90,5 @@ public class EnemyBase : MonoBehaviour
 
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.collider.tag == "Player")
-        {
-            GameManager.Instance.GameState(2);
-        }
-    }
+    
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,15 +10,11 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     private GameManager() { }
     
-    public GameObject GUIManager;
-    public GameObject Back1;
-    public GameObject Back2;
-    public GameObject Back3;
-   
-    public int GameStateIndex;
+    private int GameStateIndex;
+    public int _state => GameStateIndex;
 
-    GameObject Player;
-
+    public event Action whenGameStart;
+    public event Action whenGameOver;
 
     private void Awake()
     {
@@ -25,7 +22,6 @@ public class GameManager : MonoBehaviour
        Instance = this;
 
         //Define Player
-        Player = GameObject.FindGameObjectWithTag("Player");
         DontDestroyOnLoad(GameObject.FindGameObjectWithTag("DontDestory"));
     }
 
@@ -38,57 +34,32 @@ public class GameManager : MonoBehaviour
         GameStateIndex = GameState;
         if (GameStateIndex == 1)
         {
-            Debug.Log("game state: GameStart");
-            
+            whenGameStart?.Invoke();
         }
         else if (GameStateIndex == 2)
         {
-            Debug.Log("game state: GameOver");
-            Player.SendMessage("GameOver");
-            GUIManager.SendMessage("GameEnd");
-
-            Back1.SendMessage("GameEnd");
-            Back2.SendMessage("GameEnd");
-            Back3.SendMessage("GameEnd");
+            whenGameOver?.Invoke();
         }
-
+        #if UNITY_EDITOR
         Debug.Log("game state:" + GameStateIndex);
-
+        #endif
     }
 
     public void PlayBtuClick()
     {
         SeedGenerator.Instance.ApplySeed();
-        GUIManager.SendMessage("GameBegin");
-        Player.SendMessage("StartGame");
-        GameStateIndex = 1;
-        Back1.SendMessage("GameStart");
-        Back2.SendMessage("GameStart");
-        Back3.SendMessage("GameStart");
+        GameState(1); 
     }
 
     public void Repaly()
     {
-        SceneManager.LoadScene("2D");
+        SceneManager.LoadScene("EndlessRunner");
     }
 
     void Start()
     {
-        //Set Gamestate
         GameStateIndex = 0;
-
-        //Set GamePool Object state
-       
     }
-
-    //Templete of Delegate
-    public static int Num(int a)
-    {
-        int b = a;
-        return b;
-    }
-
-    Number LN = new Number(Num);
 
 }
 

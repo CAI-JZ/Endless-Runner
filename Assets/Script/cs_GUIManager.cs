@@ -16,8 +16,10 @@ public class cs_GUIManager : MonoBehaviour
     CanvasGroup GameOver;
     [SerializeField]
     CanvasGroup HighScore;
+    [SerializeField]
+    CanvasGroup Seed;
 
-    private float FadeSpeed = 0.05f;
+    private float FadeSpeed = 0.08f;
 
     private void Awake()
     {
@@ -26,6 +28,11 @@ public class cs_GUIManager : MonoBehaviour
             MainUI.gameObject.SetActive(true);
         }
 
+    }
+    private void Start()
+    {
+        GameManager.Instance.whenGameStart += GameBegin;
+        GameManager.Instance.whenGameOver += GameEnd;
     }
 
     public void GameBegin()
@@ -38,6 +45,12 @@ public class cs_GUIManager : MonoBehaviour
     {
         ShowUI(GameOver);
         HideUI(Gameplay);
+    }
+
+    public void ShowUISeed()
+    {
+        Seed.gameObject.SetActive(true);
+        ShowUI(Seed);
     }
 
     private void ShowUI(CanvasGroup CG)

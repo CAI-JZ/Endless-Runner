@@ -23,6 +23,7 @@ public class UI_Seed : MonoBehaviour
     {
         SeedGenerator.Instance.ApplySeed();
 
+        #if UNITY_EDITOR
         //Test Seed Random num
         int[] temp = new int[3];
 
@@ -31,7 +32,8 @@ public class UI_Seed : MonoBehaviour
             temp[i] = Random.Range(0, 100);
             print("µÚ" + (i + 1) + "´ÎÑ­»·£º" + temp[i]);
         }
-        //gameObject.SetActive(false);
+        #endif
+        gameObject.SetActive(false);
     }
 
     public void OnButtonEntryYourSeed()

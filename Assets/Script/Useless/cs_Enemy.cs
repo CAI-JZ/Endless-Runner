@@ -13,7 +13,7 @@ public class cs_Enemy : MonoBehaviour,IHit
     private bool IsInRange;
     private bool AlreadyAttack;
     public float TimeBetweenAttack = 1.8f;
-    private int Value = 50;
+
 
     GameObject Player;
     Rigidbody2D Rigid;
