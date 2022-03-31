@@ -123,6 +123,9 @@ public class LevelGenerator : MonoBehaviour
                     RandomGenerator(DoublePoint, 1.2f);
                     break;
             }
+            #if UNITY_EDITOR
+            Debug.Log(i+ " - "+ type);
+            #endif
         }
         //random enemy
         RandomGenerator(EnemyPrefab, 0f);
@@ -135,6 +138,9 @@ public class LevelGenerator : MonoBehaviour
             GameObject obj = ObjectPool.Instance.GetObject(objPrefab);
             obj.transform.position = transform.position + new Vector3(Offset * parameter, Offset * parameter, 0);
             RandomObjects.Add(obj);
+#if UNITY_EDITOR
+            Debug.Log("Offset: " + objPrefab.name + " - " + Offset);
+#endif
     }
 
     void CheckUnuseObject()

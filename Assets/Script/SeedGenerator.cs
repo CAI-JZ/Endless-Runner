@@ -22,7 +22,7 @@ public class SeedGenerator : MonoBehaviour
         SeedToShow = tempSeed.ToString();
         SeedCode = tempSeed.ToString().GetHashCode();
         #if UNITY_EDITOR
-        Debug.Log("展示Seed：" + SeedToShow + "; 实际应用的Seed： " + SeedCode);
+        Debug.Log("Seed to show：" + SeedToShow + "; Seed to Apply： " + SeedCode);
         #endif
     }
 
@@ -30,7 +30,7 @@ public class SeedGenerator : MonoBehaviour
     {
         Random.InitState(SeedCode);
         #if UNITY_EDITOR
-        Debug.Log("成功应用Seed：" + SeedToShow + " : " + SeedCode);
+        Debug.Log("Successfully apply seed：" + SeedToShow + " : " + SeedCode);
         #endif
     }
 
@@ -39,7 +39,7 @@ public class SeedGenerator : MonoBehaviour
         SeedCode = PlayerSeed.GetHashCode();
         SeedToShow = PlayerSeed;
         #if UNITY_EDITOR
-        Debug.Log("成功输入玩家的Seed：" + PlayerSeed + " - " + SeedCode);
+        Debug.Log("Successfully input Seed：" + PlayerSeed + " - " + SeedCode);
         #endif
     }
 
