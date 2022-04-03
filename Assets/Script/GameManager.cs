@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
        
        Instance = this;
 
-        //Define Player
+        
         DontDestroyOnLoad(GameObject.FindGameObjectWithTag("DontDestory"));
     }
 

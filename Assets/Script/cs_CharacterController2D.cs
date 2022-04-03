@@ -63,6 +63,7 @@ public class cs_CharacterController2D : MonoBehaviour,IHit
     {
         // Move R/L
         MoveInput = Input.GetAxis("Horizontal");
+        //MoveInput = Touch.
     }
 
     private void FixedUpdate()
