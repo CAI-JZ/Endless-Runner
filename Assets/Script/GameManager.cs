@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
         GameStateIndex = GameState;
         if (GameStateIndex == 1)
         {
+            Time.timeScale = 1;
             whenGameStart?.Invoke();
         }
         else if (GameStateIndex == 2)
