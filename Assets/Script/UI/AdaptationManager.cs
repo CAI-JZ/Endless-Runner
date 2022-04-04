@@ -6,6 +6,7 @@ using UnityEngine;
 public class AdaptationManager : MonoBehaviour
 {
     private static AdaptationManager instance;
+    private AdaptationManager() { }
 
     public static AdaptationManager Instance
     {
@@ -15,7 +16,7 @@ public class AdaptationManager : MonoBehaviour
             {
                 instance = new GameObject("AdaptationManager").AddComponent<AdaptationManager>();
                 instance.Init();
-                DontDestroyOnLoad(instance.gameObject);
+                //DontDestroyOnLoad(instance.gameObject);
             }
             return instance;
         }
@@ -26,9 +27,9 @@ public class AdaptationManager : MonoBehaviour
 
     public ResizeType resizeType = ResizeType.OnScreenChange;
 
-    [HideInInspector] public float defaultRatio; //默认设计的宽高比
-    [HideInInspector] public float actualRatio; //实际屏幕的宽高比
-    [HideInInspector] public Vector2 screenSize; //屏幕实际分辨率
+    [HideInInspector] public float defaultRatio; 
+    [HideInInspector] public float actualRatio; 
+    [HideInInspector] public Vector2 screenSize; 
 
     public Action onScreenResize;
 
@@ -79,4 +80,6 @@ public class AdaptationManager : MonoBehaviour
     {
         instance = null;
     }
+
+
 }

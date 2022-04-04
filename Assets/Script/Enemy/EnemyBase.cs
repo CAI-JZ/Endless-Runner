@@ -72,7 +72,7 @@ public class EnemyBase : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.tag == "Player" && ProtectCricle.IsProtect)
+        if (collision.collider.tag == "Player" && !ProtectCricle.IsProtect)
         {
             GameManager.Instance.GameState(2);
         }

@@ -16,7 +16,7 @@ public class Adaptation : MonoBehaviour
 
     private void OnDestroy()
     {
-        AdaptationManager.Instance.onScreenResize += OnScreenResize;
+        AdaptationManager.Instance.onScreenResize -= OnScreenResize;
     }
 
     private void Init()

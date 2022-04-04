@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class UI_HighScore : MonoBehaviour
 {
@@ -9,6 +8,13 @@ public class UI_HighScore : MonoBehaviour
     [SerializeField] Text CurrentPlayerName;
     [SerializeField] Canvas HighScoreScreenCanvas;
     [SerializeField] Transform HighScoreBoardContainer;
+    [SerializeField] GameObject DefaultSelect;
+
+    private void OnEnable()
+    {
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(DefaultSelect);
+    }
 
     private void Start()
     {

@@ -2,22 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+
 
 
 public class cs_GUIManager : MonoBehaviour
 {
     //To Control the Show or Hide of UI in GAME
     
-    [SerializeField]
-    CanvasGroup Gameplay;
-    [SerializeField]
-    CanvasGroup MainUI;
-    [SerializeField]
-    CanvasGroup GameOver;
-    [SerializeField]
-    CanvasGroup HighScore;
-    [SerializeField]
-    CanvasGroup Seed;
+    [SerializeField] CanvasGroup Gameplay;
+    [SerializeField] CanvasGroup MainUI;
+    [SerializeField] CanvasGroup GameOver; 
+    [SerializeField] CanvasGroup HighScore;
+    [SerializeField] CanvasGroup Seed;
+
+    [SerializeField] GameObject DefaultSelect;
 
     private float FadeSpeed = 0.08f;
 
@@ -25,10 +24,10 @@ public class cs_GUIManager : MonoBehaviour
     {
         if (!MainUI.gameObject.activeSelf)
         {
-            MainUI.gameObject.SetActive(true);
+            MainMenuEnable();
         }
-
     }
+
     private void Start()
     {
         GameManager.Instance.whenGameStart += GameBegin;
@@ -47,10 +46,44 @@ public class cs_GUIManager : MonoBehaviour
         HideUI(Gameplay);
     }
 
+    private void MainMenuEnable()
+    {
+        ShowUI(MainUI);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(DefaultSelect);
+    }
+
     public void ShowUISeed()
     {
         Seed.gameObject.SetActive(true);
         ShowUI(Seed);
+    }
+
+    public void RestartGame()
+    {
+        HideUI(HighScore);
+        GameManager.Instance.Repaly();
+        if (!MainUI.gameObject.activeSelf)
+        {
+            MainMenuEnable();
+        }
+    }
+
+    public void OnbtnStartGame()
+    {
+        SeedGenerator.Instance.ApplySeed();
+        GameManager.Instance.GameState(1);
+    }
+
+    public void OnbtnExit()
+    {
+#if UNITY_EDITOR
+        ScoreManager.Instance.SaveByJson();
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        ScoreManager.Instance.SaveByJson();   
+        Application.Quit();
+#endif
     }
 
     private void ShowUI(CanvasGroup CG)
@@ -69,7 +102,7 @@ public class cs_GUIManager : MonoBehaviour
         while (C.alpha > 0)
         {
             C.alpha -= FadeSpeed;
-            yield return new WaitForFixedUpdate();
+            yield return new WaitForSecondsRealtime(0);
         }
         C.gameObject.SetActive(false);
     }
@@ -83,19 +116,8 @@ public class cs_GUIManager : MonoBehaviour
         while (C.alpha < 1)
         {
             C.alpha += FadeSpeed;
-            yield return new WaitForFixedUpdate();
+            yield return new WaitForSecondsRealtime(0);
         }
-    }
-
-    public void RestartGame()
-    {
-        HighScore.gameObject.SetActive(false);
-        if (!MainUI.gameObject.activeSelf)
-        {
-            MainUI.gameObject.SetActive(true);
-            ShowUI(MainUI);
-        }
-        GameManager.Instance.Repaly();
     }
 
 

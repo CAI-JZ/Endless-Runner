@@ -39,16 +39,11 @@ public class GameManager : MonoBehaviour
         else if (GameStateIndex == 2)
         {
             whenGameOver?.Invoke();
+            Time.timeScale = 0;
         }
         #if UNITY_EDITOR
         Debug.Log("game state:" + GameStateIndex);
         #endif
-    }
-
-    public void PlayBtuClick()
-    {
-        SeedGenerator.Instance.ApplySeed();
-        GameState(1); 
     }
 
     public void Repaly()

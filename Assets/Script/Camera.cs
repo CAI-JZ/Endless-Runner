@@ -18,7 +18,7 @@ public class Camera : MonoBehaviour
     void Update()
     {
         PlayerPos = Player.GetComponent<Transform>().position;
-        transform.position = new Vector3(0, PlayerPos.y + 3.5f, PlayerPos.z - 10);
+        transform.position = new Vector3(0, PlayerPos.y +4.5f, PlayerPos.z - 10);
     }
 
 }
