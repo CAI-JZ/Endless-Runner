@@ -9,12 +9,13 @@ using UnityEngine.EventSystems;
 public class cs_GUIManager : MonoBehaviour
 {
     //To Control the Show or Hide of UI in GAME
-    
+
     [SerializeField] CanvasGroup Gameplay;
     [SerializeField] CanvasGroup MainUI;
-    [SerializeField] CanvasGroup GameOver; 
+    [SerializeField] CanvasGroup GameOver;
     [SerializeField] CanvasGroup HighScore;
     [SerializeField] CanvasGroup Seed;
+    [SerializeField] CanvasGroup Pause;
 
     [SerializeField] GameObject DefaultSelect;
 
@@ -61,7 +62,10 @@ public class cs_GUIManager : MonoBehaviour
 
     public void RestartGame()
     {
-        HideUI(HighScore);
+        if (HighScore.gameObject.activeSelf)
+        {
+            HideUI(HighScore);
+        }
         GameManager.Instance.Repaly();
         if (!MainUI.gameObject.activeSelf)
         {
@@ -78,12 +82,24 @@ public class cs_GUIManager : MonoBehaviour
     public void OnbtnExit()
     {
 #if UNITY_EDITOR
-        ScoreManager.Instance.SaveByJson();
+        ScoreManager.Instance().SaveByJson();
         UnityEditor.EditorApplication.isPlaying = false;
 #else
-        ScoreManager.Instance.SaveByJson();   
+        ScoreManager.Instance().SaveByJson();   
         Application.Quit();
 #endif
+    }
+
+    public void OnbtnPause()
+    {
+        Time.timeScale = 0;
+        ShowUI(Pause);
+    }
+
+    public void OnbtnResume()
+    {
+        HideUI(Pause);
+        Time.timeScale = 1;
     }
 
     private void ShowUI(CanvasGroup CG)

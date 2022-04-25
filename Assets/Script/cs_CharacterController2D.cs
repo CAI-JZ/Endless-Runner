@@ -6,12 +6,14 @@ public class cs_CharacterController2D : MonoBehaviour,IHit
 {
     Rigidbody2D m_ridgid;
 
-    private float speed = 0;
-    private bool IsGaming = false;
+    public float speed = 0;
+    public bool IsGaming = false;
     private float MoveInput;
-    private float Airspeed = -1.5f;
 
     GameObject ProtectCircle;
+    Gyroscope GO;
+    bool gyinfo;
+    float gySensitivity = 1.5f;
 
     private void Awake()
     {
@@ -21,10 +23,21 @@ public class cs_CharacterController2D : MonoBehaviour,IHit
         ProtectCircle = transform.Find("ProtectCricle").gameObject;
     }
 
+    private void OnDestroy()
+    {
+        
+    }
+
     private void Start()
     {
         GameManager.Instance.whenGameStart += StartGame;
         GameManager.Instance.whenGameOver += GameOver;
+
+#if UNITY_ANDROID || UNITY_IOS
+        gyinfo = SystemInfo.supportsGyroscope;
+        GO = Input.gyro;
+        GO.enabled = true;
+#endif
     }
 
     public void StartGame()
@@ -40,16 +53,6 @@ public class cs_CharacterController2D : MonoBehaviour,IHit
         IsGaming = false;
     }
 
-    void AirState()
-    {
-        transform.position += Vector3.up * Airspeed * Time.deltaTime;
-        if (transform.position.y >= -12.5f || transform.position.y < -13.5f)
-        {
-            Airspeed = -Airspeed;
-            print(Airspeed);
-        }
-    }
-
     private void Move(float MoveOffset)
     {
         if (IsGaming)
@@ -62,8 +65,27 @@ public class cs_CharacterController2D : MonoBehaviour,IHit
     void Update()
     {
         // Move R/L
+
+        #if UNITY_STANDALONE_WIN || UNITY_EDITOR
         MoveInput = Input.GetAxis("Horizontal");
-        //MoveInput = Touch.
+        #endif
+
+        //MoveInput Touch.
+        #if UNITY_ANDROID || UNITY_IOS || UNITY_EDITOR
+        if (Input.touchCount > 0)
+        {
+            Vector3 touchPos = Input.GetTouch(0).deltaPosition.normalized;
+            MoveInput = touchPos.x;
+        }
+        else
+        {
+            if (gyinfo && GO.enabled)
+            {
+                float x = GO.gravity.normalized.x;
+                MoveInput = x * gySensitivity;
+            }
+        }
+#endif
     }
 
     private void FixedUpdate()

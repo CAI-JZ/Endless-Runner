@@ -24,14 +24,14 @@ public class UI_HighScore : MonoBehaviour
     void ShowHighSocre()
     {
         HighScoreScreenCanvas.enabled = true;
-        CurrentPlsyerScore.text = ScoreManager.Instance.Score.ToString();
-        CurrentPlayerName.text = ScoreManager.Instance.playerName.ToString();
+        CurrentPlsyerScore.text = ScoreManager.Instance().Score.ToString();
+        CurrentPlayerName.text = ScoreManager.Instance().playerName.ToString();
         UpdateHighScoreBoard();
     }
 
     void UpdateHighScoreBoard()
     {
-        var ScoreList = ScoreManager.Instance.LoadHighScoreDatas().ScoreList;
+        var ScoreList = ScoreManager.Instance().LoadHighScoreDatas().ScoreList;
         for (int i = 0; i < HighScoreBoardContainer.childCount; i++)
         {
             var child = HighScoreBoardContainer.GetChild(i);

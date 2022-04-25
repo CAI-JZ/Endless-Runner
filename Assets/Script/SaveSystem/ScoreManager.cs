@@ -5,22 +5,31 @@ using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
 {
-    public static ScoreManager Instance { get; private set; }
+    public static ScoreManager instance;
     private ScoreManager() { }
+
+    public static ScoreManager Instance()
+    {
+        return instance;
+    }
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            throw new UnityException("ÒÑÓÐÊµÀý£º" + name);
+        }
+
+        Player = GameObject.FindGameObjectWithTag("Player");
+    }
 
     float ScoreParameter = 1;
     private float KeepTime = 5;
     private GameObject Player;
-
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-        }   
-
-        Player = GameObject.FindGameObjectWithTag("Player");
-    }
 
     public float Score => (float)Math.Truncate( NewScore);
     public string playerName => PlayerName;
@@ -136,9 +145,11 @@ public class ScoreManager : MonoBehaviour
         return scores;
     }
 
+#if UNITY_EDITOR
     [UnityEditor.MenuItem("Developer/Delete Score Data Save File")]
     public static void DeleteScoreSaveFile()
     {
         SaveSystem.DeleteSaveFile(PLAYER_DATA_FILENAME);
     }
+#endif
 }

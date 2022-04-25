@@ -2,10 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPool
+public sealed class ObjectPool:MonoBehaviour
 {
-    // Singleton
-    private static ObjectPool instance;
     private ObjectPool() {}
 
     //-> lazy loading
@@ -13,14 +11,23 @@ public class ObjectPool
     {
         get
         {
-            if (instance == null)
-            {
-                instance = new ObjectPool();
-            }
             return instance;
         }
     }
- 
+
+    private static ObjectPool instance;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if(instance != this)
+        {
+            throw new UnityException("ÒÑÓÐÊµÀý£º" + name);
+        }
+    }
 
     private Dictionary<string, Queue<GameObject>> ObjectPools = new Dictionary<string, Queue<GameObject>>();
     private GameObject pool;
@@ -31,19 +38,14 @@ public class ObjectPool
         if (!ObjectPools.ContainsKey(prefab.name) || ObjectPools[prefab.name].Count == 0)
         {
             new0bject = GameObject.Instantiate(prefab);
-            PushObject(new0bject);
-            if (pool == null)
-            {
-                pool = new GameObject("ObjectPool");
-                pool.tag = "DontDestory";
-            }
             GameObject childPool = GameObject.Find(prefab.name + "Pool");
             if (!childPool) 
             {
                 childPool = new GameObject(prefab.name + "Pool");
-                childPool.transform.SetParent(pool.transform);
+                childPool.transform.SetParent(gameObject.transform);
             }
             new0bject.transform.SetParent(childPool.transform);
+            PushObject(new0bject);
         }
         new0bject = ObjectPools[prefab.name].Dequeue();
         new0bject.SetActive(true);

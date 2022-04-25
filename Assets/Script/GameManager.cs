@@ -18,11 +18,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-       
        Instance = this;
-
-        
-        DontDestroyOnLoad(GameObject.FindGameObjectWithTag("DontDestory"));
     }
 
     //GAMESTATE info
@@ -49,7 +45,7 @@ public class GameManager : MonoBehaviour
 
     public void Repaly()
     {
-        SceneManager.LoadScene("EndlessRunner");
+        SceneManager.LoadScene("EndlessRunner",LoadSceneMode.Single);
     }
 
     void Start()

@@ -23,7 +23,7 @@ public class ProtectCricle : MonoBehaviour
             PortectValue--;
             float v = collision.gameObject.GetComponent<EnemyBase>()._value;
             ObjectPool.Instance.PushObject(collision.gameObject);
-            ScoreManager.Instance.UpdateScore(v);
+            ScoreManager.Instance().UpdateScore(v);
         }
         if (collision.tag == "Sword" )
         {

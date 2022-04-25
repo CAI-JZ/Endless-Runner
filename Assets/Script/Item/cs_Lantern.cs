@@ -10,6 +10,6 @@ public class cs_Lantern : cs_Collectable
     protected override void CollectEvent(Collider2D Player)
     {
         //cs_GameManager.Instance().UpdatePoint(Value);
-        ScoreManager.Instance.UpdateScore(Value);
+        ScoreManager.Instance().UpdateScore(Value);
     }
 }

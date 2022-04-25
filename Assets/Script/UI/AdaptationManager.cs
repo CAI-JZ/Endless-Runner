@@ -5,21 +5,12 @@ using UnityEngine;
 
 public class AdaptationManager : MonoBehaviour
 {
-    private static AdaptationManager instance;
+    public static AdaptationManager Instance { get; private set; }
     private AdaptationManager() { }
 
-    public static AdaptationManager Instance
+    private void Awake()
     {
-        get
-        {
-            if (instance == null)
-            {
-                instance = new GameObject("AdaptationManager").AddComponent<AdaptationManager>();
-                instance.Init();
-                //DontDestroyOnLoad(instance.gameObject);
-            }
-            return instance;
-        }
+        Instance = this;
     }
 
     public int defaultWidth = 720;
@@ -73,13 +64,8 @@ public class AdaptationManager : MonoBehaviour
     {
         actualRatio = Screen.width * 1f / Screen.height;
         onScreenResize?.Invoke();
-        print(1);
     }
 
-    private void OnDestroy()
-    {
-        instance = null;
-    }
 
 
 }

@@ -25,14 +25,14 @@ public class UI_GameOver : MonoBehaviour
 
     void ShowGameOverScreen()
     {
-        Score.text = ScoreManager.Instance.Score.ToString();
+        Score.text = ScoreManager.Instance().Score.ToString();
     }
 
     public void OnButtonSubmit()
     {
         if (!string.IsNullOrEmpty(InputField.text))
         {
-            ScoreManager.Instance.UpdatePlayerName(InputField.text);
+            ScoreManager.Instance().UpdatePlayerName(InputField.text);
         }
         HideGameOver();
     }
@@ -40,7 +40,7 @@ public class UI_GameOver : MonoBehaviour
     void HideGameOver()
     {
         gameObject.SetActive(false);
-        ScoreManager.Instance.SaveByJson();
+        ScoreManager.Instance().SaveByJson();
         HighScoreBoard.gameObject.SetActive(true);
 
     }

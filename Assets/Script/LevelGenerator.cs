@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-delegate int Number(int n);
 
 public class LevelGenerator : MonoBehaviour
 {
@@ -17,59 +16,59 @@ public class LevelGenerator : MonoBehaviour
     private GameObject EnergyPrefab;
     [SerializeField]
     private GameObject DoublePoint;
-
     
     private List<GameObject> RandomObjects = new List<GameObject>();
-    private List<GameObject> PoolObjects = new List<GameObject>();
+    //private List<GameObject> PoolObjects = new List<GameObject>();
 
     private void Awake()
     {
-        try 
-        {
-            PrepareObjects();
-        }
-        catch (System.Exception exception)
-        {
-            #if UNITY_EDITOR
-            Debug.LogError($"Failed to preparelevel. \n{exception}");
-            #endif
-        }
+//        try
+//        {
+//            PrepareObjects();
+//        }
+//        catch (System.Exception exception)
+//        {
+//#if UNITY_EDITOR
+//            Debug.LogError($"Failed to preparelevel. \n{exception}");
+//#endif
+//        }
+
     }
 
     private void Start()
     {
-        if (PoolObjects.Count > 0)
-        { 
-            foreach(GameObject pg in PoolObjects)
-            {
-                ObjectPool.Instance.PushObject(pg);
-            }
-        }
-        PoolObjects.Clear();
+        //if (PoolObjects.Count > 0)
+        //{ 
+        //    foreach(GameObject pg in PoolObjects)
+        //    {
+        //        ObjectPool.Instance.PushObject(pg);
+        //    }
+        //}
+        //PoolObjects.Clear();
 
         GameManager.Instance.whenGameStart += GenerateLevel;
         GameManager.Instance.whenGameOver += CheckUnuseObject;
     }
 
-    void PrepareObjects()
-    {
-        //Create CollectionPool
-        int count = 2;
-        for (int i = 0; i < count; i++)
-        {
-            SpawnObject(LightPrefab);
-            SpawnObject(EnergyPrefab);
-            SpawnObject(EnemyPrefab);
-            SpawnObject(DoublePoint);
-        }
-    }
+    //void PrepareObjects()
+    //{
+    //    //Create CollectionPool
+    //    int count = 2;
+    //    for (int i = 0; i < count; i++)
+    //    {
+    //        SpawnObject(LightPrefab);
+    //        SpawnObject(EnergyPrefab);
+    //        SpawnObject(EnemyPrefab);
+    //        SpawnObject(DoublePoint);
+    //    }
+    //}
 
-    void SpawnObject(GameObject prefab)
-    {
-        GameObject obj = ObjectPool.Instance.GetObject(prefab);
-        obj.transform.position = new Vector3(0, 0, 50);
-        PoolObjects.Add(obj);
-    }
+    //void SpawnObject(GameObject prefab)
+    //{
+    //    GameObject obj = ObjectPool.Instance.GetObject(prefab);
+    //    obj.transform.position = new Vector3(0, 0, 50);
+    //    PoolObjects.Add(obj);
+    //}
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -104,7 +103,7 @@ public class LevelGenerator : MonoBehaviour
         int count = Random.Range(1, 3);
         for (int i = 0; i < count; i++)
         {
-            int type = Random.Range(0, 4);
+            int type = Random.Range(0, 5);
             switch (type)
             {
                 case 0:
@@ -121,6 +120,10 @@ public class LevelGenerator : MonoBehaviour
                 case 3:
                     //generate new item
                     RandomGenerator(DoublePoint, 1.2f);
+                    break;
+                case 4:
+                    //generate new item
+                    RandomGenerator(LightPrefab, 1.2f);
                     break;
             }
             #if UNITY_EDITOR
