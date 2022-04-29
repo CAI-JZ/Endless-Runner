@@ -6,7 +6,7 @@ public class cs_CharacterController2D : MonoBehaviour,IHit
 {
     Rigidbody2D m_ridgid;
 
-    public float speed = 0;
+    private float speed = 0;
     public bool IsGaming = false;
     private float MoveInput;
 

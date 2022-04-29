@@ -45,7 +45,7 @@ public sealed class ObjectPool:MonoBehaviour
                 childPool.transform.SetParent(gameObject.transform);
             }
             new0bject.transform.SetParent(childPool.transform);
-            PushObject(new0bject);
+            PushObject(new0bject,gameObject.name);
         }
         new0bject = ObjectPools[prefab.name].Dequeue();
         new0bject.SetActive(true);
@@ -53,7 +53,7 @@ public sealed class ObjectPool:MonoBehaviour
 
     }
 
-    public void PushObject(GameObject prefab)
+    public void PushObject(GameObject prefab, string name)
     {
         string _name = prefab.name.Replace("(Clone)", string.Empty);
         if (!ObjectPools.ContainsKey(_name))
@@ -62,5 +62,8 @@ public sealed class ObjectPool:MonoBehaviour
         }
         ObjectPools[_name].Enqueue(prefab);
         prefab.SetActive(false);
+#if UNITY_EDITOR
+        Debug.Log(prefab.name+"===="+"pusher: " + name);
+#endif
     }
 }

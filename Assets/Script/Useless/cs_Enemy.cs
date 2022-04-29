@@ -73,7 +73,7 @@ public class cs_Enemy : MonoBehaviour,IHit
 
     public bool Hit()
     {
-        ObjectPool.Instance.PushObject(gameObject);
+        ObjectPool.Instance.PushObject(gameObject, gameObject.name);
         //cs_GameManager.Instance().UpdatePoint(Value);
         Debug.LogWarning("Enemy Die");
         return true;

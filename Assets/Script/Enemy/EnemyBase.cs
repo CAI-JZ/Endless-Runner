@@ -90,5 +90,9 @@ public class EnemyBase : MonoBehaviour
 
     }
 
+    public void Destory()
+    {
+        ObjectPool.Instance.PushObject(gameObject, gameObject.name);
+    }
     
 }

@@ -38,7 +38,7 @@ public class cs_Bullet : cs_Item
         Timeuse -= Time.deltaTime;
         if (Timeuse <= 0)
         {
-            ObjectPool.Instance.PushObject(gameObject);
+            ObjectPool.Instance.PushObject(gameObject, gameObject.name);
         }
     }
 

@@ -24,7 +24,7 @@ public abstract class cs_Item : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
         //Destory Object
-        ObjectPool.Instance.PushObject(gameObject);
+        ObjectPool.Instance.PushObject(gameObject, gameObject.name);
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)

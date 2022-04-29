@@ -142,7 +142,7 @@ public class LevelGenerator : MonoBehaviour
             obj.transform.position = transform.position + new Vector3(Offset * parameter, Offset * parameter, 0);
             RandomObjects.Add(obj);
 #if UNITY_EDITOR
-            Debug.Log("Offset: " + objPrefab.name + " - " + Offset);
+            //Debug.Log("Offset: " + objPrefab.name + " - " + Offset);
 #endif
     }
 
@@ -154,7 +154,7 @@ public class LevelGenerator : MonoBehaviour
             {
                 if (G.activeSelf)
                 {
-                    ObjectPool.Instance.PushObject(G);    
+                    ObjectPool.Instance.PushObject(G, gameObject.name);    
                 }                
             }
             RandomObjects.Clear();
