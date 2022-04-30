@@ -10,7 +10,7 @@ public class cs_Obstruct2D : cs_Item
         int Pos = Random.Range(1,5);
         //print(Pos);
         float ScaleX1 = Random.Range(1f,1.2f);
-        float ScaleX2 = Random.Range(0.4f, 0.8f);
+        float ScaleX2 = Random.Range(0.6f, 1f);
         float Offset = Random.Range(-0.05f, 0.05f);
         switch (Pos)
         {
